@@ -10,26 +10,26 @@ function PostsView(){
         setLoading(true)
 
         fetch('https://react-app-aad1b-default-rtdb.europe-west1.firebasedatabase.app/posts.json')
-        .then(res => res.json())
-        .then(data => {
+            .then(res => res.json())
+            .then(data => {
 
-            const postsContainer = []
-            
-            for (const key in data) {
-                const post = {
-                    id:key,
-                    ...data[key]
-                } 
+                const postsContainer = []
+                
+                for (const key in data) {
+                    const post = {
+                        id:key,
+                        ...data[key]
+                    } 
 
-                postsContainer.push(post)
-            }
+                    postsContainer.push(post)
+                }
 
-            setLoading(false)
-            setPosts(postsContainer)
-        })
-        .catch(err => {
-            console.log(err)
-        })
+                setLoading(false)
+                setPosts(postsContainer)
+            })
+            .catch(err => {
+                console.log(err)
+            })
     }, [])
 
     

@@ -1,12 +1,20 @@
 import Post from './Post'
 import classes from './Posts.module.css'
 
-function Posts(props){
+function Posts({posts}){
     return <ul className={classes.list}>
-        {props.posts.map((post, index) => (
+        {posts.map((post, index) => (
             <Post id={post.id} key={index} title={post.title} image={post.image} description={post.description} />
         ))}
     </ul>
+}
+
+Posts.defaultProps = {
+    posts:[]
+}
+
+Posts.propTypes={
+    posts: PropTypes.array.isRequired
 }
 
 export default Posts
