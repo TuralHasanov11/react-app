@@ -1,5 +1,5 @@
 import Posts from "../components/posts/Posts"
-import {useState, useEffect} from 'react'
+import {useState, useEffect, useCallback} from 'react'
 
 function PostsView(){
 
@@ -9,12 +9,23 @@ function PostsView(){
     useEffect(()=>{
         setLoading(true)
 
-        fetch('https://react-app-aad1b-default-rtdb.europe-west1.firebasedatabase.app/posts.json')
-        .then(res => res.json())
-        .then(data => {
+        getPosts()
+        
+        return () => {}
+    }, [getPosts])
 
-            const postsContainer = []
+    const getPosts = useCallback(async ()=>{
+        
+        try {
+            const res = await fetch('https://react-app-aad1b-default-rtdb.europe-west1.firebasedatabase.app/posts.json')
             
+            if(!res.ok){
+                throw new Error('Somethign went wrong!')
+            }
+
+            const data = res.json() 
+            const postsContainer = []
+                
             for (const key in data) {
                 const post = {
                     id:key,
@@ -26,11 +37,10 @@ function PostsView(){
 
             setLoading(false)
             setPosts(postsContainer)
-        })
-        .catch(err => {
-            console.log(err)
-        })
-    }, [])
+        } catch (error) {
+            
+        }
+    })
 
     
     if(loading){

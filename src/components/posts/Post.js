@@ -2,6 +2,7 @@ import Card from '../ui/Card'
 import classes from './Post.module.css'
 import {useContext} from 'react'
 import FavoritesContext from '../../store/favorites-context'
+import { Link } from 'react-router-dom'
 
 function Post(props){
 
@@ -32,6 +33,7 @@ function Post(props){
                 <p>{props.description}</p>
             </div>
             <div className={classes.actions}>
+                <Link to={`posts/${props.id}`}>More Info</Link>
                 <button onClick={toggleFavoritePost}>
                     {postIsFavorite?'Remove from Favorites':'To Favorites'}
                 </button>
