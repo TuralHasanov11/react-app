@@ -1,5 +1,5 @@
 import { useState, useRef, useContext } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import AuthContext from '../../store/auth-context';
 
 const AuthForm = () => {
@@ -11,6 +11,7 @@ const AuthForm = () => {
   const authCtx = useContext(AuthContext)
 
   const navigate = useNavigate()
+  let [searchParams, setSearchParams] = useSearchParams();
 
   function submitForm(event){
     event.preventDefault()
@@ -39,7 +40,8 @@ const AuthForm = () => {
         .then(data=>{
           const expTime = new Date(new Date().getTime()+(+data.expiresIn*1000))
           authCtx.login(data.idToken, expTime.toISOString())
-          navigate('/', {replace:true})
+
+          navigate(`/${searchParams.get('next')?searchParams.get('next'):''}`, {replace:true})
         })
         .catch(err=>{
           alert(err.message)
@@ -58,7 +60,9 @@ const AuthForm = () => {
         })
         .then(res => {
           if(res.ok){
-            return res.json()
+            emailInput.current.value=''
+            passwordInput.current.value=''
+            setIsLogin(true)
           }else{
             return res.json().then(data=>{
               if(data && data.error){
