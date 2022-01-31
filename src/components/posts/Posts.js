@@ -1,5 +1,6 @@
 import Post from './Post'
 import classes from './Posts.module.css'
+import PropTypes from 'prop-types';
 
 function Posts({posts}){
     return <ul className={classes.list}>

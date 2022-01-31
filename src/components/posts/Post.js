@@ -33,7 +33,7 @@ function Post(props){
                 <p>{props.description}</p>
             </div>
             <div className={classes.actions}>
-                <Link to={`posts/${props.id}`}>More Info</Link>
+                <Link className='btn btn-info mx-1' to={`/posts/${props.id}`}>More Info</Link>
                 <button onClick={toggleFavoritePost}>
                     {postIsFavorite?'Remove from Favorites':'To Favorites'}
                 </button>

@@ -6,15 +6,15 @@ function PostsView(){
     const [loading, setLoading] = useState(true)
     const [posts, setPosts] = useState([])
 
-    useEffect(()=>{
-        setLoading(true)
-
-        fetch('https://react-app-aad1b-default-rtdb.europe-west1.firebasedatabase.app/posts.json')
-            .then(res => res.json())
-            .then(data => {
-
+    async function getPosts(){
+        
+        try {
+            const res = await fetch('https://react-app-aad1b-default-rtdb.europe-west1.firebasedatabase.app/posts.json')
+            
+            if(res.ok){
+                const data = await res.json() 
                 const postsContainer = []
-                
+                    
                 for (const key in data) {
                     const post = {
                         id:key,
@@ -26,11 +26,25 @@ function PostsView(){
 
                 setLoading(false)
                 setPosts(postsContainer)
-            })
-            .catch(err => {
-                console.log(err)
-            })
+                
+            }else{
+                throw new Error('Somethign went wrong!')
+            }
+
+            
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    useEffect(()=>{
+        setLoading(true)
+
+        getPosts()
+        
+        return () => {}
     }, [])
+
 
     
     if(loading){

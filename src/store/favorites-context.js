@@ -28,17 +28,15 @@ export function FavoritesContextProvider(props){
         return favoritesContainer.some(post => post.id === postId)
     }
 
-    const context = {
-        favorites: favoritesContainer,
-        favoritesCount: favoritesContainer.length,
-        addFavorite: addFavorite,
-        removeFavorite: removeFavorite,
-        postIsFavorite: postIsFavorite
-    }
-
-    return <FavoritesContext.Provider value = {context}>
-        {props.children}
-    </FavoritesContext.Provider>
+    return <FavoritesContext.Provider value = {{
+            favorites: favoritesContainer,
+            favoritesCount: favoritesContainer.length,
+            addFavorite: addFavorite,
+            removeFavorite: removeFavorite,
+            postIsFavorite: postIsFavorite
+        }}>
+            {props.children}
+        </FavoritesContext.Provider>
 }
 
 export default FavoritesContext

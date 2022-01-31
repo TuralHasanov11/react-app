@@ -5,18 +5,26 @@ function AddPostView(){
 
     const navigate = useNavigate()
 
-    function onAddPost(data){
-        fetch('https://react-app-aad1b-default-rtdb.europe-west1.firebasedatabase.app/posts.json',{
-            method:'POST',
-            body:JSON.stringify(data),
-            headers:{
-                'Content-Type':"application/json"
+    async function onAddPost(data){
+        
+        try{
+            const res = await fetch('https://react-app-aad1b-default-rtdb.europe-west1.firebasedatabase.app/posts.json',{
+                method:'POST',
+                body:JSON.stringify(data),
+                headers:{
+                    'Content-Type':"application/json"
+                }
+            })
+    
+            if(res.ok){
+                navigate('/', {replace:true})
+            }else{
+                throw new Error('Error')
             }
-        }).then(res => {
-            navigate('/', {replace:true})
-        }).catch(err => {
-            console.log(err)
-        })
+        }catch(error){
+            console.log(error.message)
+        }
+        
     }
 
 

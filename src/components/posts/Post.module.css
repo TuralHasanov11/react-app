@@ -29,7 +29,10 @@
 
 .actions {
   padding: 1.5rem;
-  text-align: center;
+  font-size: 0.8em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .actions button {
