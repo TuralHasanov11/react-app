@@ -1,32 +1,24 @@
 import NewPostForm from "../components/posts/NewPostForm"
 import { useNavigate } from 'react-router-dom'
+import useHttp from "../hooks/use-http"
 
 function AddPostView(){
 
     const navigate = useNavigate()
+    const {loading, error, sendRequest:createPost} = useHttp()
 
-    async function onAddPost(data){
-        
-        try{
-            const res = await fetch('https://react-app-aad1b-default-rtdb.europe-west1.firebasedatabase.app/posts.json',{
-                method:'POST',
-                body:JSON.stringify(data),
-                headers:{
-                    'Content-Type':"application/json"
-                }
-            })
-    
-            if(res.ok){
-                navigate('/', {replace:true})
-            }else{
-                throw new Error('Error')
-            }
-        }catch(error){
-            console.log(error.message)
-        }
-        
+    function onAddPost(data){
+        createPost({
+            url:'https://react-app-aad1b-default-rtdb.europe-west1.firebasedatabase.app/posts.json',
+            method:'POST',
+            headers:{
+                'Content-Type':'application/json'
+            },
+            body:JSON.stringify(data),
+        }, ()=>{
+            navigate('/', {replace:true})
+        })
     }
-
 
     return <div id="AddPost">
         <h1>Add New Post</h1>
